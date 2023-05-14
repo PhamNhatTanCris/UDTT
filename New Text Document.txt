@@ -1,0 +1,166 @@
+1.Phương pháp sinh 
+void next_config(int x[], int n, int i){
+	x[i] += 1;
+	i++;
+	while(i<=n){
+		x[i] = x[i - 1] + 1;	
+		i++;
+	}
+}
+void view_config(int x[], int n){
+	for (int i = 1; i<=n ; i++)
+		cout<<x[i];
+	cout<<endl;
+}
+void listing_configs(int k, int n){
+	int i;
+	int x[n + 1];
+	// cau hinh dau tien{1 2 ... k}
+	for(int i = 1; i <= k;i++){
+		x[i] = i;
+	}
+	do{
+		view_config(x,k);
+		i = k;
+		while(i>0 && x[i] == n - k + i){
+			i --;
+		}
+		if(i>0){
+			next_config(x, k, i);
+		}
+	}while(i > 0);
+}
+2.Đệ quy
+3.Quay lui
+4.Tham lam
+4.Chia để trị 
+int binarySearch(int array[], int L, int R, int c)
+    { 
+      
+        if (L > R) return -1;
+        int mid = (L + R) / 2;
+        if (c == array[mid]) 
+            return mid;
+        if (c < array[mid]) 
+            return binarySearch(array, L , mid-1, c);
+        if (c > array[mid]) 
+            return binarySearch(array, mid+1 , R, c);
+    }
+5.Thuật toán z
+void z_algo(string s, int *z) {
+	int n = s.size(), l = 0, right = 0;
+	for(int i = 1; i < n; i++) {
+		if (i > right) {
+			l = right = i;
+			while (right < n && s[right - l]== s[right]) 
+				right++;
+			z[i] = right - l; right --;
+		} 
+		else 
+			if (z[i - l] < (right - i + 1))
+				z[i] = z[i-l];
+		else { 
+			l = i;
+			while (right < n && s[right - l] == s[right]) right ++;
+			z[i] = right - l; right --;
+		}
+	}
+}
+int main(){
+	string s="vi vietduc";
+	string p="viet";
+	s=p+"$"+s;
+	int n = s.size();
+	int z[n] = {0};
+	z[0]=-1;
+	z_algo(s,z);
+	int check = -1;
+	for(int i=0;i<s.length();i++)
+	{
+		if(z[i]== p.size()){
+			check=i-p.length()-1;
+			break;
+		}
+	}	
+	if(check == -1) cout<<"P khong xuat hien trong S!!";
+	else cout<<"P xuat hien trong S, tai vi tri dau tien la:  "<<check<<endl;
+ }
+6.Boyer_Moore_Horspool
+char s[10] = "vivietduc";
+char p[5] = "viet";
+
+int char_in_string(char c, char *p){
+	for(int i=0; i<strlen(p); i++){
+		if(p[i] == c)
+			return i;
+	}
+	return -1;
+}
+
+int Boyer_Moore_Horspool(){
+	int dem = 0, i = strlen(p), v = strlen(p);
+	while(i<strlen(s)){
+		int x = v-1, j=i-1;
+		while(s[j] == p[x] && x > -1){
+			j--; x--;
+		}
+		if(x<0){
+			dem++;
+			i = i+v;
+		}
+		else{
+			x = char_in_string(s[j], p);
+			if(x<0)
+				i= i+v;
+			else
+				i=i+v-x-1;
+		}
+	}
+	return dem;
+}
+
+int main(){
+	
+	if(Boyer_Moore_Horspool() == 0){
+		cout<<"p co trong s"<<endl;
+	}else{
+		cout<<"Khong co chuoi p trong s";
+	}
+}
+//cau 1
+#include<bits/stdc++.h>
+using namespace std;
+
+const int n = 10;
+
+int a[n] = {120000, 109000, 100001, 103400, 323342,
+ 			434990, 432459, 435212, 346545, 543567};
+			 
+int dem(int a[], int i){
+	if(i==-1)
+		return 0;
+	if(a[i] % 2 != 0)
+		return 1 + dem(a, i-1);
+	return dem(a, i-1);
+	
+}
+
+int sum(int a[], int i){
+	if(i==-1)
+		return 0;
+	if(a[i] % 2 != 0)
+		return a[i] + sum(a, i-1);
+	return sum(a, i-1);
+}
+
+void display(int a[], int n){
+	if(n==-1)
+		return;
+	display(a, n-1);
+	cout<<a[n]<<setw(10);
+}	
+
+main(){
+	display(a, n-1);
+	cout<<"\nTrung binh cong cac so le trong mang a la: "<<sum(a, n-1)/dem(a, n-1);
+}
