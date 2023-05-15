@@ -1,0 +1,48 @@
+#include<bits/stdc++.h>
+
+using namespace std;
+
+int kiemtra(string s){
+	int n = s.size();
+	for(int i = 0; i < n/2; i++){
+		if(s[i] == s[n - i - 1]){
+			return -1;
+		}
+		else{
+			return 0;
+		}
+	}
+}
+
+int main(){
+	int k;
+	string s = "rronmannamnori";
+	string c = "";
+	int e = s.size();
+	if(kiemtra(s) == -1){
+		cout<<"xau "<<s<<" la xau doi xung";
+	}
+	else{
+		cout<<"xau "<<s<<" khong phai la xau doi xung"<<endl;
+		cout<<"nhap k: ";
+		cin>>k;
+		int d = s.size() - k;
+		if(d >= k){
+			for(int i = 0; i < d; i++){
+				c[i] = s[e - i - 1];
+			}
+			for(int i = 0; i < d; i++){
+				cout<<c[i];
+			}
+		}
+		else{
+			for(int i = 0; i < k; i++){
+				c[i] = s[k - i - 1];
+			}
+			for(int i = 0; i < k; i++){
+				cout<<c[i];
+			}
+		}
+	}
+	
+}
